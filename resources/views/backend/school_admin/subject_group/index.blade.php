@@ -233,36 +233,23 @@
         });
 
         $(document).on('click', '.createSubject', function() {
-            // $('select[name="class_id"]').empty();
             $('#dynamic_name').val('');
-            // $('select[name="class_id"]').empty();
             $('.section_selection').empty();
-            // $('.checkbox-container').empty();
-            // Select all checkboxes by their name attribute
             var checkboxes = document.querySelectorAll('input[type="checkbox"][name="subject_group[]"]');
-
-            // Loop through each checkbox and remove the checked attribute
             checkboxes.forEach(function(checkbox) {
                 checkbox.checked = false;
             });
             $('#createSubject').modal('show');
         });
-
-        // Attach change event handler to the class dropdown
         $('select[name="class_id"]').change(function() {
-            // Get the selected class ID
             var classId = $(this).val();
-            // Fetch sections based on the selected class ID
             fetchSections(classId);
         });
-
-        // Define a function for the AJAX call
         function fetchSections(classId, callback) {
             $.ajax({
                 url: '{{ url('admin/get-section-by-class') }}/' + classId,
                 type: 'GET',
                 success: function(data) {
-                    // Clear existing checkboxes
                     $('.section_selection').empty();
 
                     // Add checkboxes based on the fetched data
